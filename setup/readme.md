@@ -33,7 +33,7 @@ correctly.
    should now have this file, `readme.md`, on your local computer. Open the file in your editor,
    and write below the URL to your fork of the GitHub repository, and the add and commit:
 
-   My Weekly Problems repository URL:
+   My Weekly Problems repository URL: https://github.com/djbuettner/weekly-problems
 
 4. Next, push your commit to GitHub. Run `git push origin master` from your command line.
 
