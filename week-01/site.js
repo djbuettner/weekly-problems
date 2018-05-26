@@ -6,7 +6,7 @@ The `index.html` file, which you do not need to edit, contains an unordered list
 linked to GitHub profiles for everyone in the class. It also uses a tag you might not have seen
 before: `<template>`, https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template
 
-You'll use native JavaScript to listen for a click event on any one of those links, prevent the
+You'll use native JavaScript to listen for a click event on any one of those links, prevent the
 default link-following behavior, and hit the GitHub API to return JSON data for the profile whose
 link a user clicked. You'll then display the data as set forth in the `<template>` tag at the bottom
 of the HTML file, and append it to the `<blockquote>` element.
@@ -52,10 +52,14 @@ members.addEventListener('click', function(e) {
     e.preventDefault();
     // Diagnostic: log the clicked `<a>` element's `href` value
     console.log(e.target.href, 'clicked');
+    // console.log("Hello World");
 
     // TODO: Somehow isolate the last chunk of the GitHub profile URL, which contains the username
     // https://github.com/<username>. The full URL is a string at `e.target.href`:
-    username = '';
+    // username = '';
+
+    // From the URL, remove all characters up to the last '/'.  This gets the username.
+    username = e.target.href.replace(/.*\//,"");
 
     // Diagnostic: log the username value
     console.log('Username value:', username);
@@ -73,7 +77,7 @@ members.addEventListener('click', function(e) {
 
     // This block commented with stars so you can get things above working first:
 
-    /*
+    // /*
     fetch(request_url)
       .then(function(data) {
         // Parse the returned data as JSON:
@@ -82,11 +86,65 @@ members.addEventListener('click', function(e) {
       .then(function(profile_json) {
         // Diagnostic; output the login value
         console.log('Login', profile_json.login);
+	// console.log(profile_json);
 
         // TODO: Insert the parts of the JSON data we want in the `template` HTML and
         // append it to the profile `<blockquote id="profile">`
         // TODO: Display the username (`login`) in case a team member has not set a profile name
+
+	// Using the console log to check the three elements in the template and to see that the
+	// inline conditional on the name works.
+	console.log(profile_json.name != null ? profile_json.name : profile_json.login , profile_json.avatar_url, profile_json.public_repos);
+
+	// Taking the example from the Mozilla template documentation 
+	if ('content' in document.createElement('template')) {
+	    // console.log(document); // Analyze the document content
+	    // console.log("Hello World");  // Did I get to this statement (i.e., browser compatible)
+	    var t = document.querySelector('#member');
+	    // console.log(t); // Analyze the tempate member content
+	    var clone = document.importNode(t.content, true);
+	    // console.log(t.content);
+	    // console.log(clone);
+
+	/*	Commenting the code out that was populating the template element.
+		Turns out that I don't want to do that and only populate the blockquote element
+
+	    var h2 = clone.querySelector('#name');
+	    h2.textContent = profile_json.name != null ? profile_json.name : profile_json.login;
+	    var img = clone.querySelector('#avatar_url');
+	    img.textContent = profile_json.avatar_url;
+	    var span = clone.querySelector('#public_repos');
+	    span.textContent = profile_json.public_repos;
+
+	    t.appendChild(clone);
+	*/
+	    // console.log(t);  // Used to checkout final template contains correct information
+
+	    var bq = document.querySelector('#profile');
+	    var clone2 = document.importNode(t.content, true);
+
+	    var h2 = clone2.querySelector('#name');
+	    h2.textContent = profile_json.name != null ? profile_json.name : profile_json.login;
+	    var img = clone2.querySelector('#avatar_url');
+	    img.src = profile_json.avatar_url;
+	    var span = clone2.querySelector('#public_repos');
+	    span.textContent = profile_json.public_repos;
+
+	    bq.appendChild(clone2); 
+
+
+	    // bq.appendChild(clone2); // While blockquote gets the HTML correctly and shows "Owner of repositiories", there is no other data??
+	    // clone2.appendChild(clone);  // This has no effect on the HTML--blockquote not updated
+	    // bq.textContent = clone2.textContent; // Only puts in "Owner of repositories 
+	    // bq.textContent = t.textContent;  // This only puts the unformatted text in browser
+	    // bq.appendChild(t);  // Funny result--this moves [not copies the template withing blockquoate
+	    // bq.appendChild(clone);
+
+	    // console.log(clone2);
+	    console.log(t);
+	    console.log(bq);
+	}
       });
-    */
+    // */
   }
 });
