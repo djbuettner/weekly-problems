@@ -97,50 +97,45 @@ members.addEventListener('click', function(e) {
 	console.log(profile_json.name != null ? profile_json.name : profile_json.login , profile_json.avatar_url, profile_json.public_repos);
 
 	// Taking the example from the Mozilla template documentation 
+	// at https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template
+	// Checking to see that browser supports template elements by looking at content attribute.
 	if ('content' in document.createElement('template')) {
-	    // console.log(document); // Analyze the document content
-	    // console.log("Hello World");  // Did I get to this statement (i.e., browser compatible)
+
+	    // Get the template via the id name of member
 	    var t = document.querySelector('#member');
-	    // console.log(t); // Analyze the tempate member content
+
+	    // Get the blockquote via the id name of profile
+	    var bq = document.querySelector('#profile');
+
+	    // With help from Prof. Stolley, remove all prior nodes in blockquote
+	    if ( profile.hasChildNodes() ) {
+		while (profile.firstChild) {
+		    profile.removeChild(profile.firstChild);
+		}
+	    }
+
+	    // Using the Mozilla template documentation, create a clone from template content
 	    var clone = document.importNode(t.content, true);
-	    // console.log(t.content);
-	    // console.log(clone);
 
-	/*	Commenting the code out that was populating the template element.
-		Turns out that I don't want to do that and only populate the blockquote element
-
+	    // Within clone, find the first part that has the name
 	    var h2 = clone.querySelector('#name');
+	    // Set the content to the person's name and if it doesn't exist, to the login
 	    h2.textContent = profile_json.name != null ? profile_json.name : profile_json.login;
+	    // Set the img to the picture URL in avatar_url
+	    // I did struggle with this one because I first used img.textContent instead of img.src
+	    // It was a good learning experience that took a bunch of time.
 	    var img = clone.querySelector('#avatar_url');
-	    img.textContent = profile_json.avatar_url;
+	    img.src = profile_json.avatar_url;
+	    // The last part of the template has the number of public repositories
+	    // that are in the span element.  Using same approach others.
 	    var span = clone.querySelector('#public_repos');
 	    span.textContent = profile_json.public_repos;
 
-	    t.appendChild(clone);
-	*/
-	    // console.log(t);  // Used to checkout final template contains correct information
+	    // The final step is to append the clone none to the blockquote profile.  
+	    bq.appendChild(clone); 
 
-	    var bq = document.querySelector('#profile');
-	    var clone2 = document.importNode(t.content, true);
-
-	    var h2 = clone2.querySelector('#name');
-	    h2.textContent = profile_json.name != null ? profile_json.name : profile_json.login;
-	    var img = clone2.querySelector('#avatar_url');
-	    img.src = profile_json.avatar_url;
-	    var span = clone2.querySelector('#public_repos');
-	    span.textContent = profile_json.public_repos;
-
-	    bq.appendChild(clone2); 
-
-
-	    // bq.appendChild(clone2); // While blockquote gets the HTML correctly and shows "Owner of repositiories", there is no other data??
-	    // clone2.appendChild(clone);  // This has no effect on the HTML--blockquote not updated
-	    // bq.textContent = clone2.textContent; // Only puts in "Owner of repositories 
-	    // bq.textContent = t.textContent;  // This only puts the unformatted text in browser
-	    // bq.appendChild(t);  // Funny result--this moves [not copies the template withing blockquoate
-	    // bq.appendChild(clone);
-
-	    // console.log(clone2);
+	    // Several console.log statements that are useful to check the browser in console and inspector
+	    // console.log(clone);
 	    console.log(t);
 	    console.log(bq);
 	}
