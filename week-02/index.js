@@ -24,7 +24,7 @@ req(options)
     console.log('JSON =', response);
 
     // fs.writeFile('response.json', JSON.stringify(response).replace(',','\\n'), (err) => {
-    fs.writeFile('response.json', JSON.stringify(response, null, 2), (err) => {
+    fs.writeFile('response.json', JSON.stringify(response, null, 2), err => {
       if (err) {
         throw err;
       }
