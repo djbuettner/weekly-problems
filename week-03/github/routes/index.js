@@ -1,15 +1,15 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 // Get week-02 modules with fs being for testing.
 // const fs = require('fs'); // Used for initial testing
-// Require the request-promise-native package
+// Require the request-promise-native package, but renamed to reqprom
 const reqprom = require('request-promise-native');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
 
   // Get week-02 request to GitHub api
   const options = {
@@ -27,21 +27,8 @@ router.get('/', function(req, res, next) {
     .then(function(response) {
       // TODO: Handle the returned JSON data and write it to a file called
       // `response.json` in your `week-two/` directory
-      console.log('JSON =', response);
 
-      // First test was to get file created
-      /* fs.writeFile('response.json', JSON.stringify(response, null, 2), (err) => {
-        if (err) {
-          throw err;
-        }
-        console.log('File saved!');
-      } ); */
-      // res.render('index', JSON.stringify(response, null, 2)) // Tried the render: failed
-      // res.json(JSON.stringify(response, null, 2))  // Testing sending the GitHub JSON back: success
-      // res.json(response)  // Testing sending the GitHub JSON back: success
-      // res.send(JSON.stringify(response, null, 2))  // Testing the send: sussess as body
-      // res.redirect(options.uri); // Testing redirect to my GitHub API: success
-      // res.render('json', {json: JSON.stringify(response, null, 2)});
+      // Created the view 'json.pug' and sending request to render the GitHub API
       res.render('json', {json: response});
     }
     )
