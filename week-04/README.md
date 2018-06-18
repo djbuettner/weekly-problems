@@ -53,3 +53,8 @@ media, specifying correctly in the PUG file, and then specifying in the CSS file
 this functionality in the second project where I will add at least one more table or possible graphs [if I
 figure out how to do that]. I'm okay with my progress in CSS for this project given that it is actually my
 first time specifying CSS.
+
+You asked if there is anything that could help me. Actually, there is. Can you provide somewhere between 3 to 6
+sites that use RDM well. I would go to these sites and observe how the phone, tablet, and desktop layouts are
+done. I would further investigate (i.e., reverse engineer) the CSS to understand what they are doing and how
+they manipulate CSS to get their effects in the browser.
