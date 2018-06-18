@@ -17,7 +17,8 @@ two things for this week’s Weekly Problem:
 
 
 
-A copy of my first project CSS file is in this week-04 folder.
+
+A copy of my first project CSS file is in this week-04 folder named screen.css.
 
 Addressing the Cascading Style Sheets (CSS) was the last requirement that I addressed in this project.
 I had the working version of getting the usgs.gov API data, parsing & extracting the key data items, and
